@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Pick a time &mdash; CybergateFX{% endblock %}
+
+{% block content %}
+<section class="cfx-section">
+  <div class="container">
+    <div class="d-flex align-items-end justify-content-between flex-wrap mb-4">
+      <div>
+        <h2 class="mb-1">Pick a time slot</h2>
+        <p class="text-muted mb-0">Choose an open window to start your booking.</p>
+      </div>
+      <a href="{% url 'bookings:dashboard' %}" class="btn btn-link">&larr; Back to dashboard</a>
+    </div>
+
+    {% if slots %}
+      <div class="cfx-slot-grid">
+        {% for slot in slots %}
+          <div class="cfx-slot-card {% if slot.is_full %}is-full{% endif %}">
+            <div class="cfx-slot-card-head">
+              <span class="cfx-slot-mentor">{{ slot.mentor.name }}</span>
+              <span class="cfx-slot-spec">{{ slot.mentor.get_specialization_display }}</span>
+            </div>
+            <div class="cfx-slot-card-body">
+              <div class="cfx-slot-date">{{ slot.date|date:"l, M j, Y" }}</div>
+              <div class="cfx-slot-time">
+                {{ slot.start_time|time:"H:i" }}
+                <span class="cfx-slot-duration">&middot; {{ slot.duration_minutes }} min</span>
+              </div>
+              <div class="cfx-slot-seats">
+                {% if slot.is_full %}
+                  <span class="status-pill full">Full</span>
+                {% else %}
+                  <span class="status-pill open">{{ slot.seats_left }} seat{{ slot.seats_left|pluralize }} left</span>
+                {% endif %}
+              </div>
+            </div>
+            <div class="cfx-slot-card-foot">
+              {% if slot.is_full %}
+                <button class="btn btn-outline-secondary btn-sm" disabled>Unavailable</button>
+              {% else %}
+                <a href="{% url 'bookings:new' slot.pk %}" class="btn btn-primary btn-sm">Book this slot</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="cfx-empty">
+        <p class="mb-2">No open time slots right now.</p>
+        <p class="text-muted mb-3">New slots are added by the admin on a rolling basis.</p>
+        <a href="{% url 'mentors:mentor_list' %}" class="btn btn-outline-primary">Browse mentors</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

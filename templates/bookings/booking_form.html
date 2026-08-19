@@ -24,10 +24,7 @@
             {{ form.plan }}
             {% if form.plan.errors %}<div class="text-danger small">{{ form.plan.errors }}</div>{% endif %}
           </div>
-          <div class="mb-3">
-            <label class="form-label">Time slot</label>
-            {{ form.time_slot }}
-          </div>
+          {# Slot is shown above in the callout; the form only collects plan + notes. #}
           <div class="mb-3">
             <label class="form-label">Notes</label>
             {{ form.notes }}

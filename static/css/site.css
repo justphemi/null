@@ -501,3 +501,57 @@ a:hover { color: var(--brand-dark); }
   padding: 12px 16px;
   font-size: 0.92rem;
 }
+
+/* ==========================================================================
+   Booking schedule (slot picker)
+   ========================================================================== */
+.cfx-slot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.cfx-slot-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: border-color .15s ease, transform .15s ease;
+}
+.cfx-slot-card:hover { border-color: var(--brand); }
+.cfx-slot-card.is-full { opacity: .65; }
+.cfx-slot-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--surface-alt);
+  border-bottom: 1px solid var(--line);
+  font-size: 0.85rem;
+}
+.cfx-slot-mentor { font-weight: 600; color: var(--ink); }
+.cfx-slot-spec {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+.cfx-slot-card-body { padding: 16px; flex: 1; }
+.cfx-slot-date { font-weight: 600; margin-bottom: 4px; }
+.cfx-slot-time { color: var(--ink); margin-bottom: 12px; }
+.cfx-slot-duration { color: var(--ink-soft); font-size: 0.85rem; }
+.cfx-slot-card-foot {
+  padding: 12px 16px;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+.status-pill.open   { background: #e6f7f0; color: var(--success); }
+.status-pill.full   { background: #fceaea; color: var(--danger); }
+.cfx-empty {
+  background: var(--surface);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 48px 24px;
+  text-align: center;
+}
