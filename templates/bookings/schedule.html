@@ -5,10 +5,10 @@
 {% block content %}
 <section class="cfx-section">
   <div class="container">
-    <div class="d-flex align-items-end justify-content-between flex-wrap mb-4">
+    <div class="cfx-page-head">
       <div>
-        <h2 class="mb-1">Pick a time slot</h2>
-        <p class="text-muted mb-0">Choose an open window to start your booking.</p>
+        <h2>Pick a time slot</h2>
+        <p class="head-sub">Choose an open window to start your booking.</p>
       </div>
       <a href="{% url 'bookings:dashboard' %}" class="btn btn-link">&larr; Back to dashboard</a>
     </div>
@@ -27,7 +27,7 @@
                 {{ slot.start_time|time:"H:i" }}
                 <span class="cfx-slot-duration">&middot; {{ slot.duration_minutes }} min</span>
               </div>
-              <div class="cfx-slot-seats">
+              <div>
                 {% if slot.is_full %}
                   <span class="status-pill full">Full</span>
                 {% else %}

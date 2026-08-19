@@ -7,28 +7,24 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-7">
-        <h2>Simulated checkout</h2>
+        <h2 class="mb-2">Simulated checkout</h2>
         <div class="simulated-banner mb-4">
           This is a demo environment. No real payment is taken. Submitting this form will mark the booking as paid.
         </div>
 
-        <div class="bg-white p-4 rounded mb-4" style="border:1px solid var(--line);">
-          <div class="d-flex justify-content-between mb-2">
-            <span>Mentor</span><strong>{{ booking.time_slot.mentor.name }}</strong>
-          </div>
-          <div class="d-flex justify-content-between mb-2">
-            <span>Date</span><strong>{{ booking.time_slot.date|date:"M j, Y" }} &middot; {{ booking.time_slot.start_time|time:"H:i" }}</strong>
-          </div>
-          <div class="d-flex justify-content-between mb-2">
-            <span>Plan</span><strong>{{ booking.plan.name }}</strong>
-          </div>
+        <div class="cfx-card mb-4">
+          <dl class="cfx-dl">
+            <dt>Mentor</dt>  <dd>{{ booking.time_slot.mentor.name }}</dd>
+            <dt>Date</dt>    <dd>{{ booking.time_slot.date|date:"M j, Y" }} &middot; {{ booking.time_slot.start_time|time:"H:i" }}</dd>
+            <dt>Plan</dt>    <dd>{{ booking.plan.name }}</dd>
+          </dl>
           <hr>
-          <div class="d-flex justify-content-between">
-            <span>Total</span><strong style="font-size:1.2rem;">${{ booking.payment.amount }}</strong>
-          </div>
+          <dl class="cfx-dl" style="font-size:1.05rem;">
+            <dt>Total</dt>   <dd><strong style="font-size:1.2rem;">${{ booking.payment.amount }}</strong></dd>
+          </dl>
         </div>
 
-        <form method="post" class="bg-white p-4 rounded" style="border:1px solid var(--line);">
+        <form method="post" class="cfx-card">
           {% csrf_token %}
 
           <label class="form-label">Payment method</label>

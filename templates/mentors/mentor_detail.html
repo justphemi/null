@@ -7,23 +7,30 @@
   <div class="container">
     <div class="row g-5">
       <div class="col-lg-4">
-        {% if mentor.photo_url %}
-          <!-- <img class="hero-art mb-3" src="{{ mentor.photo_url }}" alt="{{ mentor.name }}"> -->
-        {% endif %}
-        <h2>{{ mentor.name }}</h2>
-        <p class="text-muted">Founder &amp; Lead Mentor &middot; {{ mentor.years_experience }} yrs experience</p>
-        <p>{{ mentor.bio }}</p>
-        <div class="cfx-callout">
-          <strong>Plans covered:</strong>
-          {% for p in mentor.plans.all %}
-            <span class="status-pill confirmed">{{ p.name }}</span>
-          {% empty %}
-            <span class="text-muted">No plans assigned.</span>
-          {% endfor %}
+        <div class="cfx-mentor-card mb-3">
+          <div class="avatar" aria-hidden="true">{{ mentor.name|slice:":1"|upper }}</div>
+          <div class="body">
+            <span class="spec-pill">{{ mentor.get_specialization_display }}</span>
+            <div class="name">{{ mentor.name }}</div>
+            <div class="role">Founder &amp; Lead Mentor &middot; {{ mentor.years_experience }} yrs experience</div>
+            <p class="bio">{{ mentor.bio }}</p>
+          </div>
         </div>
-        <div class="cfx-callout mt-3" style="background:var(--surface-alt); border-left-color:var(--line);">
+
+        <div class="cfx-callout mb-3">
+          <strong>Plans covered</strong>
+          <div class="mt-2 d-flex flex-wrap gap-2">
+            {% for p in mentor.plans.all %}
+              <span class="status-pill confirmed">{{ p.name }}</span>
+            {% empty %}
+              <span class="text-muted">No plans assigned.</span>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="cfx-callout muted">
           <strong>Weekly schedule</strong>
-          <div class="mt-1 text-muted">
+          <div class="mt-2 text-muted" style="font-size:0.92rem;">
             Mon &ndash; Fri: 09:00 &ndash; 17:00 UTC<br>
             Saturday: 10:00 &ndash; 14:00 UTC<br>
             Sunday: day off
@@ -32,28 +39,55 @@
       </div>
 
       <div class="col-lg-8">
-        <h3>Book a session</h3>
-        <p class="text-muted">Pick an open slot below. After payment confirmation you'll see it in your dashboard.</p>
-
-        <div class="cfx-slot-list">
-          {% for slot in time_slots %}
-            <div class="cfx-slot">
-              <div>
-                <div class="when">{{ slot.date|date:"l, M j, Y" }} &middot; {{ slot.start_time|time:"H:i" }}</div>
-                <div class="meta">{{ slot.duration_minutes }} min &middot; {{ slot.seats_left }} seat{{ slot.seats_left|pluralize }} left</div>
-              </div>
-              {% if user.is_authenticated %}
-                <a href="{% url 'bookings:new' slot.pk %}" class="btn btn-primary btn-sm">Book</a>
-              {% else %}
-                <a href="{% url 'accounts:login' %}?next={% url 'bookings:new' slot.pk %}" class="btn btn-outline-primary btn-sm">Log in to book</a>
-              {% endif %}
-            </div>
-          {% empty %}
-            <div class="cfx-slot">
-              <div class="meta">No open slots right now. Please check back tomorrow.</div>
-            </div>
-          {% endfor %}
+        <div class="cfx-page-head">
+          <div>
+            <h2>Book a session</h2>
+            <p class="head-sub">Pick an open slot below. After payment confirmation you'll see it in your dashboard.</p>
+          </div>
         </div>
+
+        {% if time_slots %}
+          <div class="cfx-slot-grid">
+            {% for slot in time_slots %}
+              {% if slot.seats_left <= 0 %}
+                <div class="cfx-slot-card is-full">
+              {% else %}
+                <div class="cfx-slot-card">
+              {% endif %}
+                <div class="cfx-slot-card-body">
+                  <div class="cfx-slot-date">{{ slot.date|date:"l, M j, Y" }}</div>
+                  <div class="cfx-slot-time">
+                    {{ slot.start_time|time:"H:i" }}
+                    <span class="cfx-slot-duration">&middot; {{ slot.duration_minutes }} min</span>
+                  </div>
+                  <div>
+                    {% if slot.seats_left <= 0 %}
+                      <span class="status-pill full">Full</span>
+                    {% else %}
+                      <span class="status-pill open">{{ slot.seats_left }} seat{{ slot.seats_left|pluralize }} left</span>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="cfx-slot-card-foot">
+                  {% if user.is_authenticated %}
+                    {% if slot.seats_left <= 0 %}
+                      <button class="btn btn-outline-secondary btn-sm" disabled>Unavailable</button>
+                    {% else %}
+                      <a href="{% url 'bookings:new' slot.pk %}" class="btn btn-primary btn-sm">Book</a>
+                    {% endif %}
+                  {% else %}
+                    <a href="{% url 'accounts:login' %}?next={% url 'bookings:new' slot.pk %}" class="btn btn-outline-primary btn-sm">Log in to book</a>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="cfx-empty">
+            <p class="mb-2">No open slots right now.</p>
+            <p class="text-muted mb-3">Please check back tomorrow — new slots are added regularly.</p>
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>

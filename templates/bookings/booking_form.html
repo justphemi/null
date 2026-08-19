@@ -7,8 +7,8 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8">
-        <h2>Confirm your booking</h2>
-        <p class="text-muted">Review the details and pick the plan you'd like to attach.</p>
+        <h2 class="mb-1">Confirm your booking</h2>
+        <p class="text-muted mb-4">Review the details and pick the plan you'd like to attach.</p>
 
         <div class="cfx-callout mb-4">
           <strong>{{ slot.mentor.name }}</strong> &middot;
@@ -17,12 +17,12 @@
           {{ slot.duration_minutes }} min
         </div>
 
-        <form method="post" class="bg-white p-4 rounded" style="border:1px solid var(--line);">
+        <form method="post" class="cfx-card">
           {% csrf_token %}
           <div class="mb-3">
             <label class="form-label">Plan</label>
             {{ form.plan }}
-            {% if form.plan.errors %}<div class="text-danger small">{{ form.plan.errors }}</div>{% endif %}
+            {% if form.plan.errors %}<div class="text-danger small mt-1">{{ form.plan.errors }}</div>{% endif %}
           </div>
           {# Slot is shown above in the callout; the form only collects plan + notes. #}
           <div class="mb-3">
@@ -32,7 +32,7 @@
           {% if form.non_field_errors %}
             <div class="alert alert-danger">{{ form.non_field_errors }}</div>
           {% endif %}
-          <div class="d-flex gap-2">
+          <div class="d-flex gap-2 flex-wrap">
             <button type="submit" class="btn btn-primary">Continue to payment</button>
             <a href="{% url 'mentors:mentor_detail' slot.mentor_id %}" class="btn btn-link">Cancel</a>
           </div>

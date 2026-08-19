@@ -5,19 +5,21 @@
 {% block content %}
 <section class="cfx-section">
   <div class="container">
-    <h2>Your mentor</h2>
-    <p class="section-sub">CybergateFX is run by a single mentor, Joshua. Every session, every signal — him.</p>
+    <div class="cfx-page-head">
+      <div>
+        <h2>Your mentor</h2>
+        <p class="head-sub">CybergateFX is run by a single mentor, Joshua. Every session, every signal — him.</p>
+      </div>
+    </div>
 
     <div class="row g-4 justify-content-center">
       {% for mentor in mentors %}
         <div class="col-md-8 col-lg-6">
           <div class="cfx-mentor-card">
-            {% if mentor.photo_url %}
-              <!-- <img class="photo" src="{{ mentor.photo_url }}" alt="{{ mentor.name }}"> -->
-            {% else %}
-              <div class="photo d-flex align-items-center justify-content-center text-muted">Photo</div>
-            {% endif %}
+            {# Initials avatar — no photo needed. #}
+            <div class="avatar" aria-hidden="true">{{ mentor.name|slice:":1"|upper }}</div>
             <div class="body">
+              <span class="spec-pill">{{ mentor.get_specialization_display }}</span>
               <div class="name">{{ mentor.name }}</div>
               <div class="role">Founder &amp; Lead Mentor &middot; {{ mentor.years_experience }} yrs</div>
               <p class="bio">{{ mentor.bio }}</p>

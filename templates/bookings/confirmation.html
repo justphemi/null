@@ -7,21 +7,21 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-7">
-        <div class="bg-white p-5 rounded text-center" style="border:1px solid var(--line);">
-          <div style="width:72px;height:72px;background:#e6f7f0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:var(--success);font-size:2rem;font-weight:700;margin-bottom:16px;">&#10003;</div>
-          <h2>Booking confirmed</h2>
+        <div class="cfx-card cfx-card-loose text-center">
+          <div class="cfx-confirm-check" aria-hidden="true">&#10003;</div>
+          <h2 class="mb-1">Booking confirmed</h2>
           <p class="text-muted">A confirmation has been recorded for your account.</p>
 
-          <div class="text-start mt-4">
-            <div class="d-flex justify-content-between mb-2"><span>Booking</span><strong>#{{ booking.pk }}</strong></div>
-            <div class="d-flex justify-content-between mb-2"><span>Mentor</span><strong>{{ booking.time_slot.mentor.name }}</strong></div>
-            <div class="d-flex justify-content-between mb-2"><span>Date</span><strong>{{ booking.time_slot.date|date:"M j, Y" }} &middot; {{ booking.time_slot.start_time|time:"H:i" }}</strong></div>
-            <div class="d-flex justify-content-between mb-2"><span>Plan</span><strong>{{ booking.plan.name }}</strong></div>
-            <div class="d-flex justify-content-between mb-2"><span>Status</span><span class="status-pill confirmed">Confirmed</span></div>
-            <div class="d-flex justify-content-between mb-2"><span>Payment</span><span class="status-pill paid">Paid (simulated)</span></div>
-          </div>
+          <dl class="cfx-dl mt-4 mb-4 text-start mx-auto" style="max-width:420px;">
+            <dt>Booking</dt>     <dd>#{{ booking.pk }}</dd>
+            <dt>Mentor</dt>      <dd>{{ booking.time_slot.mentor.name }}</dd>
+            <dt>Date</dt>        <dd>{{ booking.time_slot.date|date:"M j, Y" }} &middot; {{ booking.time_slot.start_time|time:"H:i" }}</dd>
+            <dt>Plan</dt>        <dd>{{ booking.plan.name }}</dd>
+            <dt>Status</dt>      <dd><span class="status-pill confirmed">Confirmed</span></dd>
+            <dt>Payment</dt>     <dd><span class="status-pill paid">Paid (simulated)</span></dd>
+          </dl>
 
-          <div class="d-flex gap-2 justify-content-center mt-4">
+          <div class="d-flex gap-2 justify-content-center flex-wrap">
             <a href="{% url 'bookings:dashboard' %}" class="btn btn-primary">Go to dashboard</a>
             <a href="{% url 'mentors:home' %}" class="btn btn-outline-primary">Back to home</a>
           </div>

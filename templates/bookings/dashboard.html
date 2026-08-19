@@ -5,8 +5,13 @@
 {% block content %}
 <section class="cfx-section">
   <div class="container">
-    <h2>Welcome back, {{ user.first_name|default:user.email }}.</h2>
-    <p class="text-muted">Here's a summary of your bookings.</p>
+    <div class="cfx-page-head">
+      <div>
+        <h2>Welcome back, {{ user.first_name|default:user.email }}.</h2>
+        <p class="head-sub">Here's a summary of your bookings.</p>
+      </div>
+      <a href="{% url 'bookings:schedule' %}" class="btn btn-primary">Book a session</a>
+    </div>
 
     <div class="cfx-dash-stats">
       <div class="cfx-stat">
@@ -26,16 +31,22 @@
     <h3 class="mt-4">Upcoming sessions</h3>
     <table class="cfx-table mb-5">
       <thead>
-        <tr><th>Mentor</th><th>Date &amp; time</th><th>Plan</th><th>Status</th><th></th></tr>
+        <tr>
+          <th>Mentor</th>
+          <th>Date &amp; time</th>
+          <th>Plan</th>
+          <th>Status</th>
+          <th class="text-end">Actions</th>
+        </tr>
       </thead>
       <tbody>
         {% for b in upcoming %}
           <tr>
-            <td><strong>{{ b.time_slot.mentor.name }}</strong></td>
-            <td>{{ b.time_slot.date|date:"M j, Y" }} &middot; {{ b.time_slot.start_time|time:"H:i" }}</td>
-            <td>{{ b.plan.name }}</td>
-            <td><span class="status-pill {{ b.status }}">{{ b.get_status_display }}</span></td>
-            <td class="text-end">
+            <td data-label="Mentor"><strong>{{ b.time_slot.mentor.name }}</strong></td>
+            <td data-label="Date & time">{{ b.time_slot.date|date:"M j, Y" }} &middot; {{ b.time_slot.start_time|time:"H:i" }}</td>
+            <td data-label="Plan">{{ b.plan.name }}</td>
+            <td data-label="Status"><span class="status-pill {{ b.status }}">{{ b.get_status_display }}</span></td>
+            <td data-label="Actions" class="text-end">
               <a href="{% url 'bookings:cancel' b.pk %}" class="btn btn-sm btn-outline-danger">Cancel</a>
             </td>
           </tr>
@@ -48,15 +59,20 @@
     <h3>Past sessions</h3>
     <table class="cfx-table">
       <thead>
-        <tr><th>Mentor</th><th>Date</th><th>Plan</th><th>Status</th></tr>
+        <tr>
+          <th>Mentor</th>
+          <th>Date</th>
+          <th>Plan</th>
+          <th>Status</th>
+        </tr>
       </thead>
       <tbody>
         {% for b in past %}
           <tr>
-            <td>{{ b.time_slot.mentor.name }}</td>
-            <td>{{ b.time_slot.date|date:"M j, Y" }}</td>
-            <td>{{ b.plan.name }}</td>
-            <td><span class="status-pill {{ b.status }}">{{ b.get_status_display }}</span></td>
+            <td data-label="Mentor">{{ b.time_slot.mentor.name }}</td>
+            <td data-label="Date">{{ b.time_slot.date|date:"M j, Y" }}</td>
+            <td data-label="Plan">{{ b.plan.name }}</td>
+            <td data-label="Status"><span class="status-pill {{ b.status }}">{{ b.get_status_display }}</span></td>
           </tr>
         {% empty %}
           <tr><td colspan="4" class="text-muted">No past sessions.</td></tr>
