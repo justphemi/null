@@ -64,34 +64,6 @@
   </div>
 </section>
 
-<!-- MENTORS -------------------------------------------------------- -->
-<section class="cfx-section" style="background: var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
-  <div class="container">
-    <h2>Meet your mentor</h2>
-    <p class="section-sub">Every session, every signal, every plan is run personally by Joshua.</p>
-
-    <div class="row g-4 justify-content-center">
-      {% for mentor in mentors %}
-        <div class="col-md-6 col-lg-4">
-          <div class="cfx-mentor-card">
-            {% if mentor.photo_url %}
-              <img class="photo" src="{{ mentor.photo_url }}" alt="{{ mentor.name }}">
-            {% else %}
-              <div class="photo d-flex align-items-center justify-content-center text-muted">Photo</div>
-            {% endif %}
-            <div class="body">
-              <div class="name">{{ mentor.name }}</div>
-              <div class="role">Founder &amp; Lead Mentor &middot; {{ mentor.years_experience }} yrs</div>
-              <p class="bio">{{ mentor.bio|truncatechars:160 }}</p>
-              <a href="{% url 'mentors:mentor_detail' mentor.pk %}" class="btn btn-outline-primary btn-sm w-100">View profile &amp; schedule</a>
-            </div>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-
 <!-- LIVE SIGNAL PREVIEW ------------------------------------------- -->
 <section class="cfx-section">
   <div class="container">
