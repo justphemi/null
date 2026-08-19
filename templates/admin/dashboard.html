@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}CybergateFX Admin{% endblock %}
+
+{% block content %}
+<div class="cfx-admin-shell">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h1>CybergateFX Admin</h1>
+        <p class="text-muted mb-0">Operational overview for staff.</p>
+      </div>
+      <a href="/admin/portal/" class="btn btn-outline-primary">Open full Django admin</a>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-md-3">
+        <div class="cfx-admin-stat">
+          <div class="label">Bookings today</div>
+          <div class="value">{{ bookings_today }}</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="cfx-admin-stat">
+          <div class="label">Bookings this week</div>
+          <div class="value">{{ bookings_this_week }}</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="cfx-admin-stat">
+          <div class="label">Pending payments</div>
+          <div class="value">{{ pending_payments_count }}</div>
+          <div class="meta">${{ pending_payments_total|floatformat:2 }} outstanding</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="cfx-admin-stat">
+          <div class="label">Active signal subscribers</div>
+          <div class="value">{{ active_subscriptions }}</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="mt-5">Quick links</h3>
+    <div class="d-flex flex-wrap gap-2 mb-4">
+      <a href="/admin/portal/bookings/booking/" class="btn btn-outline-primary btn-sm">Bookings</a>
+      <a href="/admin/portal/bookings/payment/" class="btn btn-outline-primary btn-sm">Payments</a>
+      <a href="/admin/portal/mentors/signal/" class="btn btn-outline-primary btn-sm">Post a Signal</a>
+      <a href="/admin/portal/mentors/timeslot/" class="btn btn-outline-primary btn-sm">Time slots</a>
+      <a href="/admin/portal/mentors/mentor/" class="btn btn-outline-primary btn-sm">Mentors</a>
+      <a href="/admin/portal/mentors/mentorshipplan/" class="btn btn-outline-primary btn-sm">Plans</a>
+      <a href="/admin/portal/accounts/user/" class="btn btn-outline-primary btn-sm">Users</a>
+    </div>
+
+    <h3>Recent bookings</h3>
+    <table class="cfx-table">
+      <thead>
+        <tr><th>#</th><th>Customer</th><th>Mentor &amp; date</th><th>Plan</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        {% for b in recent_bookings %}
+          <tr>
+            <td>#{{ b.id }}</td>
+            <td>{{ b.user.email }}</td>
+            <td>{{ b.time_slot.mentor.name }} &middot; {{ b.time_slot.date|date:"M j" }}</td>
+            <td>{{ b.plan.name }}</td>
+            <td><span class="status-pill {{ b.status }}">{{ b.get_status_display }}</span></td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5" class="text-muted">No bookings yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

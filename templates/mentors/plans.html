@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Plans &mdash; CybergateFX{% endblock %}
+
+{% block content %}
+<section class="cfx-section">
+  <div class="container">
+    <h2>Mentorship plans</h2>
+    <p class="section-sub">Each plan includes a different mix of coaching, group sessions and signal access.</p>
+
+    <div class="row g-4">
+      {% for plan in plans %}
+        <div class="col-md-4">
+          <div class="cfx-plan-card">
+            <div class="plan-name">{{ plan.name }}</div>
+            <div class="plan-price">${{ plan.price }}<small> / {{ plan.duration_days }} days</small></div>
+            <p class="plan-desc">{{ plan.description }}</p>
+            <div class="plan-meta">
+              <strong>{{ plan.sessions_included }}</strong> sessions &middot;
+              <strong>{{ plan.duration_days }}</strong> days access
+            </div>
+            {% if user.is_authenticated %}
+              <a href="{% url 'mentors:mentor_list' %}" class="btn btn-primary w-100">Choose a mentor</a>
+            {% else %}
+              <a href="{% url 'accounts:signup' %}" class="btn btn-primary w-100">Sign up to start</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

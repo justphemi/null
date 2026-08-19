@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Subscribe to view signals &mdash; CybergateFX{% endblock %}
+
+{% block content %}
+<section class="cfx-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7 text-center">
+        <h2>The live signal feed is for active subscribers.</h2>
+        <p class="text-muted">
+          Subscribe to the Signal Subscription plan to get every entry, stop-loss and take-profit posted by our mentors.
+        </p>
+        {% if signal_plan %}
+          <div class="cfx-callout mt-4 mb-4 d-inline-block text-start" style="max-width: 460px;">
+            <div class="d-flex justify-content-between">
+              <strong>{{ signal_plan.name }}</strong>
+              <span>${{ signal_plan.price }} / {{ signal_plan.duration_days }} days</span>
+            </div>
+            <p class="text-muted mt-2 mb-0">{{ signal_plan.description }}</p>
+          </div>
+        {% endif %}
+        <div class="d-flex gap-2 justify-content-center mt-3">
+          <a href="{% url 'mentors:plans' %}" class="btn btn-primary">View plans</a>
+          <a href="{% url 'mentors:mentor_list' %}" class="btn btn-outline-primary">Browse mentors</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

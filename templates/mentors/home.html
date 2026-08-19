@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}CybergateFX &mdash; Forex Signals and Mentorship{% endblock %}
+
+{% block content %}
+
+<!-- HERO ----------------------------------------------------------- -->
+<section class="cfx-hero">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <h1>Trade with the mentor who actually runs the desk.</h1>
+        <p class="lead">
+          CybergateFX is Joshua's trading room. One mentor, one signal desk,
+          one weekly schedule. Live calls, 1-on-1 coaching and a structured plan to grow your account.
+        </p>
+        <div class="d-flex gap-2 mt-4">
+          <a href="{% url 'mentors:plans' %}" class="btn btn-primary btn-lg">View plans</a>
+          <a href="{% url 'mentors:mentor_detail' primary_mentor.pk %}" class="btn btn-outline-primary btn-lg">Book a session</a>
+        </div>
+        <div class="d-flex gap-4 mt-4 text-muted small">
+          <span><strong style="color:var(--ink)">12+ yrs</strong> trading experience</span>
+          <span><strong style="color:var(--ink)">Mon&ndash;Sat</strong> live sessions</span>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <img class="hero-art"
+             src="https://img.magnific.com/free-vector/buy-sell-trend-forex-trading-background_1017-31712.jpg?semt=ais_test_b&w=740&q=80"
+             alt="Forex trading chart">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANS ---------------------------------------------------------- -->
+<section class="cfx-section">
+  <div class="container">
+    <h2>Plans for every stage of your trading</h2>
+    <p class="section-sub">Pick the mentorship level that matches your goals. Cancel anytime.</p>
+
+    <div class="row g-4">
+      {% for plan in plans %}
+        <div class="col-md-4">
+          <div class="cfx-plan-card">
+            <div class="plan-name">{{ plan.name }}</div>
+            <div class="plan-price">${{ plan.price }}<small> / {{ plan.duration_days }} days</small></div>
+            <p class="plan-desc">{{ plan.description }}</p>
+            <div class="plan-meta">
+              <strong>{{ plan.sessions_included }}</strong> sessions &middot;
+              <strong>{{ plan.duration_days }}</strong> days access
+            </div>
+            <a href="{% url 'mentors:plans' %}" class="btn btn-outline-primary w-100">Learn more</a>
+          </div>
+        </div>
+      {% empty %}
+        <p class="text-muted">Plans will appear here once seeded.</p>
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="{% url 'mentors:plans' %}" class="btn btn-link">See all plans &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- MENTORS -------------------------------------------------------- -->
+<section class="cfx-section" style="background: var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="container">
+    <h2>Meet your mentor</h2>
+    <p class="section-sub">Every session, every signal, every plan is run personally by Joshua.</p>
+
+    <div class="row g-4 justify-content-center">
+      {% for mentor in mentors %}
+        <div class="col-md-6 col-lg-4">
+          <div class="cfx-mentor-card">
+            {% if mentor.photo_url %}
+              <img class="photo" src="{{ mentor.photo_url }}" alt="{{ mentor.name }}">
+            {% else %}
+              <div class="photo d-flex align-items-center justify-content-center text-muted">Photo</div>
+            {% endif %}
+            <div class="body">
+              <div class="name">{{ mentor.name }}</div>
+              <div class="role">Founder &amp; Lead Mentor &middot; {{ mentor.years_experience }} yrs</div>
+              <p class="bio">{{ mentor.bio|truncatechars:160 }}</p>
+              <a href="{% url 'mentors:mentor_detail' mentor.pk %}" class="btn btn-outline-primary btn-sm w-100">View profile &amp; schedule</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- LIVE SIGNAL PREVIEW ------------------------------------------- -->
+<section class="cfx-section">
+  <div class="container">
+    <div class="d-flex align-items-end justify-content-between mb-3">
+      <div>
+        <h2>Live signals, posted by Joshua</h2>
+        <p class="section-sub mb-0">A snapshot of recent calls from the desk. Full feed is available to Signal subscribers.</p>
+      </div>
+      <a href="{% url 'mentors:signal_feed' %}" class="btn btn-link d-none d-md-inline">View full feed &rarr;</a>
+    </div>
+
+    {% for signal in latest_signals %}
+      <div class="cfx-signal">
+        <div>
+          <span class="pair">{{ signal.pair }}</span>
+          <span class="dir {{ signal.direction|lower }}">{{ signal.direction }}</span>
+          <div class="meta-line">{{ signal.title }} &middot; {{ signal.mentor.name }}</div>
+        </div>
+        <div class="levels">
+          Entry <strong>{{ signal.entry_price }}</strong>
+          &middot; SL <strong style="color:var(--danger)">{{ signal.stop_loss }}</strong>
+          &middot; TP <strong style="color:var(--success)">{{ signal.take_profit }}</strong>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-muted">No signals yet.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- TRUST / FOOTER CTA -------------------------------------------- -->
+<section class="cfx-section" style="background:var(--brand); color:#fff;">
+  <div class="container text-center">
+    <h2 style="color:#fff;">Ready to start trading with a plan?</h2>
+    <p style="color:#d5e3ff; max-width:560px; margin:0 auto 24px;">
+      Join thousands of traders using CybergateFX to sharpen their edge and stick to a process.
+    </p>
+    <a href="{% url 'accounts:signup' %}" class="btn btn-light btn-lg">Create your account</a>
+  </div>
+</section>
+
+{% endblock %}

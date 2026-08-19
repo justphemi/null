@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment &mdash; CybergateFX{% endblock %}
+
+{% block content %}
+<section class="cfx-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <h2>Simulated checkout</h2>
+        <div class="simulated-banner mb-4">
+          This is a demo environment. No real payment is taken. Submitting this form will mark the booking as paid.
+        </div>
+
+        <div class="bg-white p-4 rounded mb-4" style="border:1px solid var(--line);">
+          <div class="d-flex justify-content-between mb-2">
+            <span>Mentor</span><strong>{{ booking.time_slot.mentor.name }}</strong>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span>Date</span><strong>{{ booking.time_slot.date|date:"M j, Y" }} &middot; {{ booking.time_slot.start_time|time:"H:i" }}</strong>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span>Plan</span><strong>{{ booking.plan.name }}</strong>
+          </div>
+          <hr>
+          <div class="d-flex justify-content-between">
+            <span>Total</span><strong style="font-size:1.2rem;">${{ booking.payment.amount }}</strong>
+          </div>
+        </div>
+
+        <form method="post" class="bg-white p-4 rounded" style="border:1px solid var(--line);">
+          {% csrf_token %}
+
+          <label class="form-label">Payment method</label>
+          <div class="mb-3">
+            {% for radio in form.method %}
+              <div class="form-check">
+                {{ radio.tag }} <label class="form-check-label">{{ radio.choice_label }}</label>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div id="card-fields">
+            <div class="mb-3">
+              <label class="form-label">Name on card</label>
+              {{ form.card_name }}
+            </div>
+            <div class="row g-2 mb-3">
+              <div class="col-md-7">
+                <label class="form-label">Card number</label>
+                {{ form.card_number }}
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Expiry</label>
+                {{ form.card_expiry }}
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">CVC</label>
+                {{ form.card_cvc }}
+              </div>
+            </div>
+          </div>
+
+          {% if form.errors %}
+            <div class="alert alert-danger small">
+              {% for field, errors in form.errors.items %}
+                <div>{{ errors|join:", " }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <button type="submit" class="btn btn-primary w-100">Pay ${{ booking.payment.amount }} (simulated)</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+{% block extra_js %}
+<script>
+  // Show/hide card fields based on selected method.
+  (function() {
+    var radios = document.querySelectorAll('input[name="method"]');
+    var card = document.getElementById('card-fields');
+    function toggle() {
+      var v = document.querySelector('input[name="method"]:checked');
+      card.style.display = (v && v.value === 'card') ? 'block' : 'none';
+    }
+    radios.forEach(function(r){ r.addEventListener('change', toggle); });
+    toggle();
+  })();
+</script>
+{% endblock %}

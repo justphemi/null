@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Your mentor &mdash; CybergateFX{% endblock %}
+
+{% block content %}
+<section class="cfx-section">
+  <div class="container">
+    <h2>Your mentor</h2>
+    <p class="section-sub">CybergateFX is run by a single mentor, Joshua. Every session, every signal — him.</p>
+
+    <div class="row g-4 justify-content-center">
+      {% for mentor in mentors %}
+        <div class="col-md-8 col-lg-6">
+          <div class="cfx-mentor-card">
+            {% if mentor.photo_url %}
+              <!-- <img class="photo" src="{{ mentor.photo_url }}" alt="{{ mentor.name }}"> -->
+            {% else %}
+              <div class="photo d-flex align-items-center justify-content-center text-muted">Photo</div>
+            {% endif %}
+            <div class="body">
+              <div class="name">{{ mentor.name }}</div>
+              <div class="role">Founder &amp; Lead Mentor &middot; {{ mentor.years_experience }} yrs</div>
+              <p class="bio">{{ mentor.bio }}</p>
+              <a href="{% url 'mentors:mentor_detail' mentor.pk %}" class="btn btn-outline-primary btn-sm w-100">View schedule</a>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <p class="text-muted">No mentor configured yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

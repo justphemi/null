@@ -1,0 +1,503 @@
+/* ==========================================================================
+   CybergateFX — Light theme, bright blue, fintech feel
+   ========================================================================== */
+
+:root {
+  --brand:        #0b66ff;          /* primary blue */
+  --brand-dark:   #0750c2;
+  --brand-soft:   #e8f1ff;
+  --ink:          #0f1b2d;          /* near-black for text */
+  --ink-soft:     #4b5b76;
+  --line:         #e6ebf2;          /* borders */
+  --surface:      #ffffff;
+  --surface-alt:  #f7f9fc;
+  --success:      #1aa179;
+  --warning:      #c97a00;
+  --danger:       #c0392b;
+  --radius:       10px;
+  --shadow-sm:    0 1px 2px rgba(15,27,45,.06), 0 1px 1px rgba(15,27,45,.04);
+  --shadow-md:    0 8px 24px rgba(15,27,45,.08);
+  --shadow-lg:    0 18px 48px rgba(15,27,45,.12);
+}
+
+html, body {
+  background: var(--surface-alt);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-feature-settings: 'cv11', 'ss01';
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5 {
+  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+a { color: var(--brand); }
+a:hover { color: var(--brand-dark); }
+
+/* ==========================================================================
+   Top navigation
+   ========================================================================== */
+.cfx-navbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.cfx-navbar .brand {
+  font-weight: 700;
+  font-size: 1.18rem;
+  padding: 5px;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+.cfx-navbar .brand .mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+  background: var(--brand);
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 700;
+  padding: 5px;
+  margin-right: 10px;
+  font-size: 0.95rem;
+}
+.cfx-navbar .nav-link {
+  color: var(--ink-soft);
+  font-weight: 500;
+  padding: 8px 14px;
+}
+.cfx-navbar .nav-link:hover,
+.cfx-navbar .nav-link.active { color: var(--brand); }
+
+/* ==========================================================================
+   Buttons (override Bootstrap defaults where needed)
+   ========================================================================== */
+.btn-primary {
+  background: var(--brand);
+  border-color: var(--brand);
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+}
+.btn-outline-primary {
+  color: var(--brand);
+  border-color: var(--brand);
+}
+.btn-outline-primary:hover {
+  background: var(--brand);
+  border-color: var(--brand);
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+.cfx-hero {
+  background: linear-gradient(135deg, #ffffff 0%, #eaf2ff 100%);
+  border-bottom: 1px solid var(--line);
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+}
+.cfx-hero h1 {
+  font-size: 2.6rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+.cfx-hero .lead {
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  max-width: 540px;
+}
+.cfx-hero .hero-art {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  max-width: 100%;
+}
+.cfx-hero .badge-trust {
+  display: inline-block;
+  background: var(--brand-soft);
+  color: var(--brand-dark);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+/* ==========================================================================
+   Section headers
+   ========================================================================== */
+.cfx-section { padding: 72px 0; }
+.cfx-section.tight { padding: 48px 0; }
+.cfx-section h2 {
+  font-size: 1.9rem;
+  margin-bottom: 8px;
+}
+.cfx-section .section-sub {
+  color: var(--ink-soft);
+  margin-bottom: 36px;
+  max-width: 620px;
+}
+
+/* ==========================================================================
+   Plan card
+   ========================================================================== */
+.cfx-plan-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.cfx-plan-card:hover {
+  border-color: var(--brand);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.cfx-plan-card .plan-name {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.cfx-plan-card .plan-price {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.cfx-plan-card .plan-price small {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+.cfx-plan-card .plan-desc {
+  color: var(--ink-soft);
+  flex-grow: 1;
+  margin: 14px 0;
+}
+.cfx-plan-card .plan-meta {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+}
+.cfx-plan-card .plan-meta strong { color: var(--ink); }
+
+/* ==========================================================================
+   Mentor card
+   ========================================================================== */
+.cfx-mentor-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+.cfx-mentor-card:hover {
+  border-color: var(--brand);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.cfx-mentor-card .photo {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  background: #d8e1ee;
+}
+.cfx-mentor-card .body { padding: 18px 20px 22px; }
+.cfx-mentor-card .name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+.cfx-mentor-card .role {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.cfx-mentor-card .bio {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+}
+
+/* ==========================================================================
+   Slot list
+   ========================================================================== */
+.cfx-slot-list {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.cfx-slot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+}
+.cfx-slot:last-child { border-bottom: none; }
+.cfx-slot .when { font-weight: 600; }
+.cfx-slot .meta { color: var(--ink-soft); font-size: 0.88rem; }
+
+/* ==========================================================================
+   Signal feed
+   ========================================================================== */
+.cfx-signal {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.cfx-signal .pair {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-right: 8px;
+}
+.cfx-signal .dir {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.cfx-signal .dir.buy  { background: #e6f7f0; color: var(--success); }
+.cfx-signal .dir.sell { background: #fceaea; color: var(--danger); }
+.cfx-signal .levels {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+.cfx-signal .levels strong { color: var(--ink); }
+.cfx-signal .meta-line {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   Auth pages
+   ========================================================================== */
+.cfx-auth-wrap {
+  display: flex;
+  align-items: stretch;
+  min-height: calc(100vh - 76px);
+}
+.cfx-auth-side {
+  flex: 1.1;
+  background: linear-gradient(135deg, #0b66ff 0%, #0750c2 100%);
+  color: #fff;
+  padding: 64px 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.cfx-auth-side h2 { color: #fff; font-size: 2rem; }
+.cfx-auth-side p  { color: #d5e3ff; max-width: 380px; }
+.cfx-auth-side .feature {
+  display: flex; align-items: flex-start; gap: 12px;
+  margin-top: 18px; color: #e6edff;
+}
+.cfx-auth-side .feature .check {
+  display: inline-flex;
+  width: 24px; height: 24px;
+  background: rgba(255,255,255,.18);
+  border-radius: 999px;
+  align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 700;
+}
+.cfx-auth-form {
+  flex: 1;
+  background: var(--surface);
+  padding: 64px 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.cfx-auth-form .auth-title {
+  font-size: 1.6rem;
+  margin-bottom: 6px;
+}
+.cfx-auth-form .auth-sub {
+  color: var(--ink-soft);
+  margin-bottom: 28px;
+}
+.cfx-auth-form .form-control {
+  border: 1px solid var(--line);
+  padding: 12px 14px;
+  border-radius: 8px;
+}
+.cfx-auth-form .form-control:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px rgba(11,102,255,.12);
+}
+.cfx-auth-form .auth-foot {
+  margin-top: 18px;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 768px) {
+  .cfx-auth-side { display: none; }
+  .cfx-auth-form { padding: 36px 24px; }
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.cfx-footer {
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  padding: 36px 0;
+  font-size: 0.9rem;
+}
+.cfx-footer a { color: var(--ink-soft); }
+.cfx-footer a:hover { color: var(--brand); }
+.cfx-footer .links {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+/* ==========================================================================
+   Dashboard
+   ========================================================================== */
+.cfx-dash-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.cfx-stat {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+.cfx-stat .label {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+.cfx-stat .value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.cfx-table {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.cfx-table th, .cfx-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+.cfx-table th {
+  background: var(--surface-alt);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+.cfx-table tr:last-child td { border-bottom: none; }
+
+.status-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.status-pill.pending   { background: #fff5e6; color: var(--warning); }
+.status-pill.confirmed { background: #e6f7f0; color: var(--success); }
+.status-pill.cancelled { background: #fceaea; color: var(--danger); }
+.status-pill.completed { background: var(--brand-soft); color: var(--brand-dark); }
+.status-pill.paid      { background: #e6f7f0; color: var(--success); }
+.status-pill.refunded  { background: #f0f1f4; color: var(--ink-soft); }
+.status-pill.failed    { background: #fceaea; color: var(--danger); }
+
+/* ==========================================================================
+   Admin dashboard (custom /admin/)
+   ========================================================================== */
+.cfx-admin-shell {
+  background: var(--surface-alt);
+  min-height: 100vh;
+  padding: 32px 0;
+}
+.cfx-admin-shell h1 { font-size: 1.7rem; margin-bottom: 24px; }
+.cfx-admin-stat {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+}
+.cfx-admin-stat .label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  letter-spacing: 0.06em;
+}
+.cfx-admin-stat .value {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 8px;
+}
+.cfx-admin-stat .meta {
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   Misc
+   ========================================================================== */
+.cfx-callout {
+  background: var(--brand-soft);
+  border-left: 4px solid var(--brand);
+  padding: 18px 22px;
+  border-radius: var(--radius);
+  color: var(--ink);
+}
+.cfx-divider {
+  height: 1px;
+  background: var(--line);
+  margin: 32px 0;
+}
+.simulated-banner {
+  background: #fff8e1;
+  border: 1px solid #f1d77a;
+  color: #7a5b00;
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 0.92rem;
+}

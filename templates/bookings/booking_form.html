@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Book a session &mdash; CybergateFX{% endblock %}
+
+{% block content %}
+<section class="cfx-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2>Confirm your booking</h2>
+        <p class="text-muted">Review the details and pick the plan you'd like to attach.</p>
+
+        <div class="cfx-callout mb-4">
+          <strong>{{ slot.mentor.name }}</strong> &middot;
+          {{ slot.date|date:"l, M j, Y" }} &middot;
+          {{ slot.start_time|time:"H:i" }} &middot;
+          {{ slot.duration_minutes }} min
+        </div>
+
+        <form method="post" class="bg-white p-4 rounded" style="border:1px solid var(--line);">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Plan</label>
+            {{ form.plan }}
+            {% if form.plan.errors %}<div class="text-danger small">{{ form.plan.errors }}</div>{% endif %}
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Time slot</label>
+            {{ form.time_slot }}
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Notes</label>
+            {{ form.notes }}
+          </div>
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+          {% endif %}
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Continue to payment</button>
+            <a href="{% url 'mentors:mentor_detail' slot.mentor_id %}" class="btn btn-link">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

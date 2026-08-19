@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ mentor.name }} &mdash; CybergateFX{% endblock %}
+
+{% block content %}
+<section class="cfx-section">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-4">
+        {% if mentor.photo_url %}
+          <!-- <img class="hero-art mb-3" src="{{ mentor.photo_url }}" alt="{{ mentor.name }}"> -->
+        {% endif %}
+        <h2>{{ mentor.name }}</h2>
+        <p class="text-muted">Founder &amp; Lead Mentor &middot; {{ mentor.years_experience }} yrs experience</p>
+        <p>{{ mentor.bio }}</p>
+        <div class="cfx-callout">
+          <strong>Plans covered:</strong>
+          {% for p in mentor.plans.all %}
+            <span class="status-pill confirmed">{{ p.name }}</span>
+          {% empty %}
+            <span class="text-muted">No plans assigned.</span>
+          {% endfor %}
+        </div>
+        <div class="cfx-callout mt-3" style="background:var(--surface-alt); border-left-color:var(--line);">
+          <strong>Weekly schedule</strong>
+          <div class="mt-1 text-muted">
+            Mon &ndash; Fri: 09:00 &ndash; 17:00 UTC<br>
+            Saturday: 10:00 &ndash; 14:00 UTC<br>
+            Sunday: day off
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <h3>Book a session</h3>
+        <p class="text-muted">Pick an open slot below. After payment confirmation you'll see it in your dashboard.</p>
+
+        <div class="cfx-slot-list">
+          {% for slot in time_slots %}
+            <div class="cfx-slot">
+              <div>
+                <div class="when">{{ slot.date|date:"l, M j, Y" }} &middot; {{ slot.start_time|time:"H:i" }}</div>
+                <div class="meta">{{ slot.duration_minutes }} min &middot; {{ slot.seats_left }} seat{{ slot.seats_left|pluralize }} left</div>
+              </div>
+              {% if user.is_authenticated %}
+                <a href="{% url 'bookings:new' slot.pk %}" class="btn btn-primary btn-sm">Book</a>
+              {% else %}
+                <a href="{% url 'accounts:login' %}?next={% url 'bookings:new' slot.pk %}" class="btn btn-outline-primary btn-sm">Log in to book</a>
+              {% endif %}
+            </div>
+          {% empty %}
+            <div class="cfx-slot">
+              <div class="meta">No open slots right now. Please check back tomorrow.</div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

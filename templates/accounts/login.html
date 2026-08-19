@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Log in &mdash; CybergateFX{% endblock %}
+
+{% block content %}
+<div class="cfx-auth-wrap">
+  <aside class="cfx-auth-side">
+    <h2>Welcome back.</h2>
+    <p>Log in to manage your bookings, view your mentor sessions, and follow the live signal feed.</p>
+    <div class="feature"><span class="check">&check;</span><div>Live trading signals from senior mentors</div></div>
+    <div class="feature"><span class="check">&check;</span><div>Book 1-on-1 or group coaching sessions</div></div>
+    <div class="feature"><span class="check">&check;</span><div>Cancel or reschedule any time</div></div>
+  </aside>
+
+  <section class="cfx-auth-form">
+    <div class="auth-title">Log in to your account</div>
+    <div class="auth-sub">Use your email to access the dashboard.</div>
+
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        {{ form.username }}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        {{ form.password }}
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Log in</button>
+    </form>
+
+    <div class="auth-foot">
+      New here? <a href="{% url 'accounts:signup' %}">Create an account</a>
+    </div>
+  </section>
+</div>
+{% endblock %}

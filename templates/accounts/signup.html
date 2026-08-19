@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign up &mdash; CybergateFX{% endblock %}
+
+{% block content %}
+<div class="cfx-auth-wrap">
+  <aside class="cfx-auth-side">
+    <h2>Start your trading journey.</h2>
+    <p>Sign up to book your first session with Joshua.</p>
+    <div class="feature"><span class="check">&check;</span><div>Three plans: 1-on-1, Group or Signals</div></div>
+    <div class="feature"><span class="check">&check;</span><div>30 days access with every plan</div></div>
+    <div class="feature"><span class="check">&check;</span><div>Cancel any time, no questions asked</div></div>
+  </aside>
+
+  <section class="cfx-auth-form">
+    <div class="auth-title">Create your account</div>
+    <div class="auth-sub">It takes less than a minute.</div>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label class="form-label">Full name</label>
+        {{ form.name }}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        {{ form.email }}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        {{ form.password1 }}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Confirm password</label>
+        {{ form.password2 }}
+      </div>
+
+      {% if form.errors %}
+        <div class="alert alert-danger small">
+          {% for field, errors in form.errors.items %}
+            <div><strong>{{ field }}:</strong> {{ errors|join:", " }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <button type="submit" class="btn btn-primary w-100">Create account</button>
+    </form>
+
+    <div class="auth-foot">
+      Already a member? <a href="{% url 'accounts:login' %}">Log in</a>
+    </div>
+  </section>
+</div>
+{% endblock %}
