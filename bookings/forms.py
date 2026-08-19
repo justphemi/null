@@ -1,8 +1,7 @@
 """Forms for bookings: a simple booking form.
 
-Users don't pick plans/products anymore — they just book a session slot and
-choose the *type* of session they want (Coaching, Group, or Signal Session).
-Mentor / plan detail pages have been removed to keep the UX minimal.
+Users pick a plan (price tier) for the slot they're booking. The slot
+itself comes from the admin-set availability on the previous page.
 """
 from django import forms
 
@@ -10,11 +9,11 @@ from .models import Booking
 
 
 class BookingForm(forms.ModelForm):
-    """Collects session type + optional notes for an open time slot."""
+    """Collects plan + optional notes for an open time slot."""
 
     class Meta:
         model = Booking
-        fields = ('session_type', 'notes')
+        fields = ('plan', 'notes')
         widgets = {
             'notes': forms.Textarea(attrs={
                 'rows': 3,

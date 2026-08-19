@@ -82,7 +82,7 @@ class ScheduleView(LoginRequiredMixin, ListView):
 
 
 class BookingCreateView(LoginRequiredMixin, CreateView):
-    """Step 2 — confirm slot + pick session type."""
+    """Step 2 — confirm slot + pick plan."""
 
     form_class = BookingForm
     model = Booking  # required so CreateView can build an unsaved instance
@@ -118,9 +118,9 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
         booking = Booking.objects.create(
             user=self.request.user,
             time_slot=self.slot,
-            session_type=form.cleaned_data['session_type'],
+            plan=form.cleaned_data['plan'],
             notes=form.cleaned_data.get('notes', ''),
-            status=Booking.Status.CONFIRMED,
+            status=Booking.Status.PENDING,
         )
         messages.success(self.request, 'Session booked with Josh.')
         return redirect('bookings:confirmation', pk=booking.pk)
